@@ -3,7 +3,7 @@
 
 
 Overrides the remaining word when the cursor is in the middle and the completion is performed.
-
+The original version replaces any word after:
 
 > [Quoting taras1] It seems that if the cursor is in the middle of the word the completion does not
 > override the whole word but its left part only.
@@ -12,6 +12,16 @@ Overrides the remaining word when the cursor is in the middle and the completion
 > the result is get_saved_doc|errors
 
 > ![](https://forum.sublimetext.com/uploads/default/original/3X/5/9/593a43a91aca20e7e821325f6c9bbe3c35559723.gif)
+
+
+But this one:
+
+> I wrote a variation where it only replaces the remaining word, if it is a subword of the completed
+> word. I added this because most times I am adding new words before the some word, and when I use
+> the completion for this new word it was deleting my word.
+
+> ![](http://i.imgur.com/8aCUJod.gif)
+
 
 
 ### Bibliography

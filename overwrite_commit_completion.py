@@ -25,13 +25,13 @@ class OverwriteCommitCompletionCommand(sublime_plugin.TextCommand):
         window.run_command( "commit_completion" )
         window.run_command( "overwrite_commit_completion_assistant", { "old_selections" : old_selections } )
 
-class OverwriteCommitCompletionAssistantCommand( sublime_plugin.TextCommand ):
+class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
     """
         Save the edit when running a Sublime Text 3 plugin
         https://stackoverflow.com/questions/20466014/save-the-edit-when-running-a-sublime-text-3-plugin
     """
 
-    def run( self, edit, old_selections ):
+    def run(self, edit, old_selections):
         """
             Since Sublime Text build ~3134, we need to wait until Sublime Text insert the completion.
         """
@@ -70,7 +70,6 @@ class OverwriteCommitCompletionAssistantCommand( sublime_plugin.TextCommand ):
             selection_index += 1
 
 
-
 """ OverwriteCommitCompletionCommand
 
 OverwriteCommitCompletionCommand
@@ -81,3 +80,15 @@ tooMuchLeft
 tooMuchLeft
 
 """
+
+
+class HelloWorldCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        view = self.view
+        view.insert(edit, view.sel()[0].begin(), "hello world")
+
+
+def foo(x):
+    return x + 1
+
+

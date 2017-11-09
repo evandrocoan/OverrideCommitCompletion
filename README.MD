@@ -23,6 +23,15 @@ But this one:
 > ![](http://i.imgur.com/8aCUJod.gif)
 
 
+## Unit Tests
+
+To run the unit tests:
+
+1. Install the package: https://github.com/randy3k/UnitTesting
+1. Open the file `unit_testing/override_commmit_completions_unit_tests.py`
+1. Open the Sublime Text command palette with `Ctrl+Shift+P`
+1. And run the command: `UnitTesting: Test Current Package`
+
 
 ### Bibliography
 

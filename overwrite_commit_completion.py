@@ -56,8 +56,7 @@ class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
             # full_completed_word: OverwriteCommitCompletionCommandCommand
             # duplicated_word:     Command
             # part_completed_word: ompletionCommand
-            if duplicated_word.isalnum() \
-                    and duplicated_word in view.substr( part_completed_region ):
+            if duplicated_word in view.substr( part_completed_region ):
 
                 # print( "Erasing duplication: " + duplicated_word )
                 view.erase( edit, duplicated_word_region )
@@ -70,10 +69,13 @@ class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
             selection_index += 1
 
 
-""" OverwriteCommitCompletionCommand
+""" OverwriteCommitCompletionCommand overwrite_commit_completion_assistant
 
 OverwriteCommitCompletionCommand
 OverwriteCommitCompletionCommand
+
+overwrite_commit_completion_assistant
+overwrite_commit_completion_assistant
 
 tooMuchLeft
 tooMuchLeft

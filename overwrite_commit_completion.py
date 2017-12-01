@@ -5,6 +5,20 @@ import sublime
 import sublime_plugin
 
 
+words_to_do_function_callback = []
+functions_to_do_callback = []
+
+
+def add_function_word_callback(word_trigger, function_callback):
+    functions_to_do_callback.append( function_callback )
+    words_to_do_function_callback.append( word_trigger )
+
+
+def do_function_callback(full_completed_word, view, edit):
+    word_index = words_to_do_function_callback.index( full_completed_word )
+    return functions_to_do_callback[word_index]( view, edit )
+
+
 class OverwriteCommitCompletionCommand(sublime_plugin.TextCommand):
     """
         Complete whole word
@@ -45,12 +59,16 @@ class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
             duplicated_word        = view.substr( duplicated_word_region )
             part_completed_region  = sublime.Region( old_selections[ selection_index ] + completion_offset, completion_end_point )
 
-            # print( "selection:           " + str( selection ) )
-            # print( "selection_word:      " + str( view.substr( selection ) ) )
-            # print( "inserted_word:       " + view.substr( sublime.Region( view.word( completion_end_point ).begin(), completion_end_point ) ) )
-            # print( "full_completed_word: " + view.substr( view.word( completion_end_point ) ) )
-            # print( "duplicated_word:     " + duplicated_word )
-            # print( "part_completed_word: " + view.substr( part_completed_region ) )
+            full_completed_region  = view.word( completion_end_point )
+            full_completed_word    = view.substr( full_completed_region )
+
+            # print( "selection:             " + str( selection ) )
+            # print( "selection_word:        " + str( view.substr( selection ) ) )
+            # print( "inserted_word:         " + view.substr( sublime.Region( view.word( completion_end_point ).begin(), completion_end_point ) ) )
+            # print( "full_completed_region: " + str( full_completed_region ) )
+            # print( "full_completed_word:   " + full_completed_word )
+            # print( "duplicated_word:       " + duplicated_word )
+            # print( "part_completed_word:   " + view.substr( part_completed_region ) )
 
             # inserted_word:       OverwriteCommitCompletionCommand
             # full_completed_word: OverwriteCommitCompletionCommandCommand
@@ -65,6 +83,12 @@ class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
                 # correct the outdated selection points after the auto completion for the remaining
                 # selections
                 completion_offset += part_completed_region.size() - duplicated_word_region.size()
+
+            if full_completed_word in words_to_do_function_callback:
+                # print( "Erasing duplication: " + full_completed_word )
+
+                view.erase( edit, full_completed_region )
+                completion_offset += do_function_callback( full_completed_word, view, edit ) - full_completed_region.size()
 
             selection_index += 1
 

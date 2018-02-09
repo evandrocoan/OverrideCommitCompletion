@@ -39,7 +39,9 @@ class OverwriteCommitCompletionCommand(sublime_plugin.TextCommand):
             old_selections.append( selection.end() )
 
         window.run_command( "commit_completion" )
-        window.run_command( "overwrite_commit_completion_assistant", { "old_selections" : old_selections } )
+
+        if old_selections:
+            window.run_command( "overwrite_commit_completion_assistant", { "old_selections" : old_selections } )
 
 
 class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):

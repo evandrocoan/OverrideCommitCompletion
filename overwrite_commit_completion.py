@@ -41,6 +41,7 @@ class OverwriteCommitCompletionCommand(sublime_plugin.TextCommand):
         window.run_command( "commit_completion" )
         window.run_command( "overwrite_commit_completion_assistant", { "old_selections" : old_selections } )
 
+
 class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
     """
         Save the edit when running a Sublime Text 3 plugin
@@ -102,39 +103,5 @@ OverwriteCommitCompletionCommand
 overwrite_commit_completion_assistant
 overwrite_commit_completion_assistant
 """
-
-
-def run_tests():
-    """
-        How do I unload (reload) a Python module?
-        https://stackoverflow.com/questions/437589/how-do-i-unload-reload-a-python-module
-    """
-    PACKAGE_ROOT_DIRECTORY = os.path.dirname( os.path.realpath( __file__ ) )
-    CURRENT_PACKAGE_NAME = os.path.basename( PACKAGE_ROOT_DIRECTORY ).rsplit('.', 1)[0]
-
-    print( "\n\n" )
-    sublime_plugin.reload_plugin( CURRENT_PACKAGE_NAME + ".tests.unit_tests_runner" )
-    sublime_plugin.reload_plugin( CURRENT_PACKAGE_NAME + ".tests.utilities" )
-    sublime_plugin.reload_plugin( CURRENT_PACKAGE_NAME + ".tests.override_commmit_completions_unit_tests" )
-
-    from .tests import unit_tests_runner
-
-    # Comment all the tests names on this list, to run all Unit Tests
-    unit_tests_to_run = \
-    [
-        # "test_snake_case_word",
-        # "test_last_selection_with_6_selections_plus_redundant_expand_at_last_word",
-    ]
-
-    unit_tests_runner.run_unit_tests( unit_tests_to_run )
-
-
-def plugin_loaded():
-    """
-        Running single test from unittest.TestCase via command line
-        https://stackoverflow.com/questions/15971735/running-single-test-from-unittest-testcase-via-command-line
-    """
-    pass
-    # run_tests()
 
 

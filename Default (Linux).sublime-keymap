@@ -4,7 +4,12 @@
     { "keys": ["enter"], "command": "overwrite_commit_completion", "context":
         [
             { "key": "auto_complete_visible" },
-            { "key": "setting.auto_complete_commit_on_tab", "operand": true },
+        ]
+    },
+
+    { "keys": ["tab"], "command": "overwrite_commit_completion", "context":
+        [
+            { "key": "auto_complete_visible" },
         ]
     },
 
@@ -13,15 +18,7 @@
     { "keys": ["enter"], "command": "overwrite_commit_completion", "context":
         [
             { "key": "auto_complete_visible" },
-            { "key": "setting.auto_complete_commit_on_tab", "operand": true },
             { "key": "setting.is_widget", "operator": "equal", "operand": true },
-        ]
-    },
-
-    { "keys": ["tab"], "command": "overwrite_commit_completion", "context":
-        [
-            { "key": "auto_complete_visible" },
-            { "key": "setting.auto_complete_commit_on_tab" }
         ]
     },
 ]

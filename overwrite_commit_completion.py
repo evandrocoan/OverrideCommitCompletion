@@ -54,16 +54,15 @@ class OverwriteCommitCompletionCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):
         view = self.view
-        window = view.window()
         old_selections = []
 
         for selection in view.sel():
             old_selections.append( selection.end() )
 
-        window.run_command( "commit_completion" )
+        view.run_command( "commit_completion" )
 
         if old_selections:
-            window.run_command( "overwrite_commit_completion_assistant", { "old_selections" : old_selections } )
+            view.run_command( "overwrite_commit_completion_assistant", { "old_selections" : old_selections } )
 
 
 class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
@@ -89,20 +88,23 @@ class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
             full_completed_region  = view.word( completion_end_point )
             full_completed_word    = view.substr( full_completed_region )
 
-            # print( "selection:             " + str( selection ) )
-            # print( "selection_word:        " + str( view.substr( selection ) ) )
-            # print( "inserted_word:         " + view.substr( sublime.Region( view.word( completion_end_point ).begin(), completion_end_point ) ) )
-            # print( "full_completed_region: " + str( full_completed_region ) )
-            # print( "full_completed_word:   " + full_completed_word )
-            # print( "duplicated_word:       " + duplicated_word )
-            # print( "part_completed_word:   " + view.substr( part_completed_region ) )
+            # print( "completion_offset:      " + str( completion_offset ) )
+            # print( "completion_start_point: " + str( old_selections[ selection_index ] ) )
+            # print( "completion_end_point:   " + str( completion_end_point ) )
+            # print( "duplicated_word_region: " + str( duplicated_word_region ) )
+            # print( "selection:              " + str( selection ) )
+            # print( "selection_word:         " + str( view.substr( selection ) ) )
+            # print( "inserted_word:          " + view.substr( sublime.Region( view.word( completion_end_point ).begin(), completion_end_point ) ) )
+            # print( "full_completed_region:  " + str( full_completed_region ) )
+            # print( "full_completed_word:    " + full_completed_word )
+            # print( "duplicated_word:        " + duplicated_word )
+            # print( "part_completed_word:    " + view.substr( part_completed_region ) )
 
             # inserted_word:       OverwriteCommitCompletionCommand
             # full_completed_word: OverwriteCommitCompletionCommandCommand
             # duplicated_word:     Command
             # part_completed_word: ompletionCommand
             if duplicated_word in view.substr( part_completed_region ):
-
                 # print( "Erasing duplication: " + duplicated_word )
                 view.erase( edit, duplicated_word_region )
 

@@ -21,6 +21,28 @@ def do_function_callback(full_completed_word, view, edit):
     return functions_to_do_callback[word_index]( view, edit )
 
 
+def find_word_end(view, completion_end_point):
+    """
+        This function is not used yet, but should be useful when dealing with completions which
+        contain word boundary characters.
+    """
+    word_separators = view.settings().get("word_separators")
+    maximum_attempts = 0
+    current_end_point = completion_end_point
+
+    while maximum_attempts < 10:
+        maximum_attempts += 1
+        next_characters = view.substr( sublime.Region( completion_end_point, completion_end_point + 50 ) )
+
+        for characther in next_characters:
+            current_end_point += 1
+
+            if characther in word_separators:
+                return current_end_point
+
+    return completion_end_point
+
+
 class OverwriteCommitCompletionCommand(sublime_plugin.TextCommand):
     """
         Complete whole word

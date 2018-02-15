@@ -7,6 +7,8 @@ import sublime
 import sublime_plugin
 
 
+old_selections = []
+
 words_to_do_function_callback = []
 functions_to_do_callback = []
 
@@ -43,7 +45,7 @@ def find_word_end(view, completion_end_point):
     return completion_end_point
 
 
-class OverwriteCommitCompletionCommand(sublime_plugin.TextCommand):
+class OverwriteCommitCompletionListener(sublime_plugin.EventListener):
     """
         Complete whole word
         https://forum.sublimetext.com/t/complete-whole-word/26375
@@ -52,17 +54,20 @@ class OverwriteCommitCompletionCommand(sublime_plugin.TextCommand):
         https://forum.sublimetext.com/t/it-is-possible-to-pass-an-array-to-a-command-without-kargs/28969
     """
 
-    def run(self, edit):
-        view = self.view
-        old_selections = []
+    def on_post_text_command(self, view, command_name, args):
 
-        for selection in view.sel():
-            old_selections.append( selection.end() )
+        if command_name == "commit_completion":
 
-        view.run_command( "commit_completion" )
+            if old_selections:
+                view.run_command( "overwrite_commit_completion_assistant" )
 
-        if old_selections:
-            view.run_command( "overwrite_commit_completion_assistant", { "old_selections" : old_selections } )
+    def on_text_command(self, view, command_name, args):
+
+        if command_name == "commit_completion":
+            old_selections.clear()
+
+            for selection in view.sel():
+                old_selections.append( selection.end() )
 
 
 class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
@@ -71,7 +76,7 @@ class OverwriteCommitCompletionAssistantCommand(sublime_plugin.TextCommand):
         https://stackoverflow.com/questions/20466014/save-the-edit-when-running-a-sublime-text-3-plugin
     """
 
-    def run(self, edit, old_selections):
+    def run(self, edit):
         """
             Since Sublime Text build ~3134, we need to wait until Sublime Text insert the completion.
         """

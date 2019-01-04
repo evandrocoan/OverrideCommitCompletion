@@ -6,6 +6,9 @@ import sublime_plugin
 import unittest
 import textwrap
 
+import OverrideCommitCompletion.tests.testing.utilities
+sublime_plugin.reload_plugin( "OverrideCommitCompletion.tests.testing.utilities" )
+
 
 def wrap_text(text):
     return textwrap.dedent( text ).strip( " " ).strip( "\n" )
@@ -17,7 +20,7 @@ class OverrideCommitCompletionUnitTests(unittest.TestCase, sublime_plugin.EventL
     @classmethod
     def setUp(self):
         self.maxDiff = None
-        self.is_running_unit_tests = True
+        OverrideCommitCompletion.tests.testing.utilities.OverrideCommitCompletionUnitTestsEventListener.is_running_unit_tests = True
 
         # Create a new Sublime Text view to perform the Unit Tests
         self.view = sublime.active_window().new_file()
@@ -28,14 +31,15 @@ class OverrideCommitCompletionUnitTests(unittest.TestCase, sublime_plugin.EventL
         settings.set("close_windows_when_empty", False)
 
     def tearDown(self):
-        self.is_running_unit_tests = False
+        OverrideCommitCompletion.tests.testing.utilities.OverrideCommitCompletionUnitTestsEventListener.is_running_unit_tests = False
 
         if self.view:
             self.view.set_scratch(True)
             self.view.window().focus_view(self.view)
             self.view.window().run_command("close_file")
 
-    def setText(self, text, start_point=0):
+    def setText(self, text, start_point, completion):
+        OverrideCommitCompletion.tests.testing.utilities.OverrideCommitCompletionUnitTestsEventListener.completion = completion
         self.view.run_command("append", {"characters": text })
 
         selections = self.view.sel()
@@ -48,30 +52,16 @@ class OverrideCommitCompletionUnitTests(unittest.TestCase, sublime_plugin.EventL
     def assertEqual(self, expected, *args, **kargs):
         super().assertEqual(expected, self.view.substr( sublime.Region( 0, self.view.size() ) ), *args, **kargs)
 
-    def on_query_completions(self, view, prefix, locations):
-
-        if self.is_running_unit_tests:
-            return \
-            (
-                [
-                    "commit_completion_assistant",
-                    "OverwriteCommitCompletionCommand",
-                ],
-                sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS
-             )
-
-        return None
-
     def test_camel_case_word(self):
-        self.setText( "OverwriteCompletionCommand", 9 )
+        self.setText( "OverwriteCompletionCommand", 9, "OverwriteCommitCompletionCommand" )
 
-        self.view.run_command( "overwrite_commit_completion" )
+        self.view.run_command( "fix_commit_completion" )
         self.assertEqual( "OverwriteCommitCompletionCommand" )
 
     def test_snake_case_word(self):
-        self.setText( "commit__assistant", 7 )
+        self.setText( "commit__assistant", 7, "commit_completion_assistant" )
 
-        self.view.run_command( "overwrite_commit_completion" )
+        self.view.run_command( "fix_commit_completion" )
         self.assertEqual( "commit_completion_assistant" )
 
 

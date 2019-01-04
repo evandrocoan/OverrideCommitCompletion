@@ -1,6 +1,13 @@
 
 # Sublime Text Overwrite Commit Completion
 
+[![Build Status](https://travis-ci.org/evandrocoan/OverrideCommitCompletion.svg?branch=master)](https://travis-ci.org/evandrocoan/OverrideCommitCompletion)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/evandrocoan/OverrideCommitCompletion?branch=master&svg=true)](https://ci.appveyor.com/project/evandrocoan/OverrideCommitCompletion/branch/master)
+[![codecov](https://codecov.io/gh/evandrocoan/OverrideCommitCompletion/branch/master/graph/badge.svg)](https://codecov.io/gh/evandrocoan/OverrideCommitCompletion)
+[![Coverage Status](https://coveralls.io/repos/github/evandrocoan/OverrideCommitCompletion/badge.svg?branch=master)](https://coveralls.io/github/evandrocoan/OverrideCommitCompletion?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/58d1b714a900461998c933e36bfc5685)](https://www.codacy.com/app/evandrocoan/OverrideCommitCompletion?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evandrocoan/OverrideCommitCompletion&amp;utm_campaign=Badge_Grade)
+[![Latest Release](https://img.shields.io/github/tag/evandrocoan/OverrideCommitCompletion.svg?label=version)](https://github.com/evandrocoan/OverrideCommitCompletion/releases)
+<a href="https://packagecontrol.io/packages/OverrideCommitCompletion"><img src="https://packagecontrol.herokuapp.com/downloads/OverrideCommitCompletion.svg"></a>
 
 Overrides the remaining word when the cursor is in the middle and the completion is performed.
 The original version replaces any word after:

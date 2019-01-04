@@ -12,7 +12,6 @@ def wrap_text(text):
 
 
 class BasicSublimeTextViewTestCase(unittest.TestCase, sublime_plugin.EventListener):
-
     is_running_unit_tests = False
 
     @classmethod
@@ -45,6 +44,9 @@ class BasicSublimeTextViewTestCase(unittest.TestCase, sublime_plugin.EventListen
 
         self.view.window().focus_view( self.view )
         self.view.run_command( 'auto_complete', {'disable_auto_insert': True, 'next_completion_if_showing': False} )
+
+    def assertEqual(self, expected, *args, **kargs):
+        super().assertEqual(expected, self.view.substr( sublime.Region( 0, self.view.size() ) ), *args, **kargs)
 
     def on_query_completions(self, view, prefix, locations):
 

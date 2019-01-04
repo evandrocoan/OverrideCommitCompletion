@@ -1,26 +1,26 @@
-// [
-//     // Using TAB and ENTER for auto complete
-//     // https://forum.sublimetext.com/t/using-tab-and-enter-for-auto-complete/23300
-//     { "keys": ["tab"], "command": "commit_completion", "context":
-//         [
-//             { "key": "auto_complete_visible" },
-//             // { "key": "setting.auto_complete_commit_on_tab", "operator": "equal", "operand": true },
-//         ]
-//     },
+[
+    // Using TAB and ENTER for auto complete
+    // https://forum.sublimetext.com/t/using-tab-and-enter-for-auto-complete/23300
+    { "keys": ["tab"], "command": "fix_commit_completion", "context":
+        [
+            { "key": "auto_complete_visible" },
+            { "key": "setting.auto_complete_commit_on_tab", "operator": "equal", "operand": true },
+        ]
+    },
+    { "keys": ["enter"], "command": "fix_commit_completion", "context":
+        [
+            { "key": "auto_complete_visible" },
+            { "key": "setting.auto_complete_commit_on_tab", "operator": "equal", "operand": false },
+        ]
+    },
 
-//     { "keys": ["enter"], "command": "commit_completion", "context":
-//         [
-//             { "key": "auto_complete_visible" },
-//             // { "key": "setting.auto_complete_commit_on_tab", "operator": "equal", "operand": false },
-//         ]
-//     },
-
-//     // This is not working, but should start working after fixed on the issue:
-//     // https://github.com/SublimeTextIssues/Core/issues/1727
-//     { "keys": ["enter"], "command": "commit_completion", "context":
-//         [
-//             { "key": "auto_complete_visible" },
-//             { "key": "setting.is_widget", "operator": "equal", "operand": true },
-//         ]
-//     },
-// ]
+    // This is not working, but should start working after fixed on the issue:
+    // Input panel closes when completions visible and press enter
+    // https://github.com/SublimeTextIssues/Core/issues/1727
+    { "keys": ["enter"], "command": "fix_commit_completion", "context":
+        [
+            { "key": "auto_complete_visible" },
+            { "key": "setting.is_widget", "operator": "equal", "operand": true },
+        ]
+    },
+]

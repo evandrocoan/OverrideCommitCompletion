@@ -55,6 +55,7 @@ class OverwriteCommitCompletionListener(sublime_plugin.EventListener):
     """
 
     def on_post_text_command(self, view, command_name, args):
+        # print('on_post_text_command command_name', command_name)
 
         if command_name == "commit_completion":
 
@@ -62,6 +63,7 @@ class OverwriteCommitCompletionListener(sublime_plugin.EventListener):
                 view.run_command( "overwrite_commit_completion_assistant" )
 
     def on_text_command(self, view, command_name, args):
+        # print('on_text_command      command_name', command_name)
 
         if command_name == "commit_completion":
             old_selections.clear()
@@ -135,4 +137,17 @@ overwrite_commit_completion_assistant
 overwrite_commit_completion_assistant
 """
 
+
+class FixCommitCompletionCommand(sublime_plugin.TextCommand):
+    """
+        The command show_overlay and hide_overlay are not logged by on_window_command
+        https://github.com/SublimeTextIssues/Core/issues/2198
+
+        TextCommand events do not always trigger when using view.run_command() from the Console
+        https://github.com/SublimeTextIssues/Core/issues/2400
+    """
+
+    def run(self, edit):
+        # print('running fix_commit_completion')
+        sublime.active_window().run_command( "commit_completion" )
 

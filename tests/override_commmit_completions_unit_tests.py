@@ -18,13 +18,13 @@ class OverrideCommitCompletionUnitTests(utilities.BasicSublimeTextViewTestCase):
     def test_camel_case_word(self):
         self.setText( "OverwriteCompletionCommand", 9 )
 
-        self.view.run_command( "fix_commit_completion" )
+        self.view.run_command( "overwrite_commit_completion" )
         self.assertEqual( "OverwriteCommitCompletionCommand" )
 
     def test_snake_case_word(self):
         self.setText( "commit__assistant", 7 )
 
-        self.view.run_command( "fix_commit_completion" )
+        self.view.run_command( "overwrite_commit_completion" )
         self.assertEqual( "commit_completion_assistant" )
 
 
